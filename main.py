@@ -1,11 +1,12 @@
 import asyncio
+from email import message
 import random
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from media import media
 
-bot = Bot(token = "7810431596:AAFSEGLUDo1_ZixDavDck7MWTlyx-eRAjm8")
+bot = Bot(token = "7592600913:AAFtL4qAI5_b1iQlyC_ASgXKVUmCyqGc90U")
 dp = Dispatcher()
 
 def  get_random_img():
@@ -41,8 +42,22 @@ async def cmd_echo(message: types.message):
     else:
         await message.answer('и че это щас было')
 
+@dp.message(Command('КНБ'))
+async def game(message:types.Message):
+    print('knb')
+    knb = ['камень', 'ножницы', 'бумага']
+    user = random.choice(knb)
+    user = message.text.replace('/КНБ', ' ').strip()
+    if bot == user:
+        await message.answer('ничья')
+    if bot == 'камень' and user == 'ножницы':
+        print('ты проиграл')
+
 async def main():
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
     asyncio.run(main())
+
+
+    
