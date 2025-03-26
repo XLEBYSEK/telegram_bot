@@ -11,9 +11,6 @@ from media import media
 bot = Bot(token="7592600913:AAFtL4qAI5_b1iQlyC_ASgXKVUmCyqGc90U")
 dp = Dispatcher()
 
-greet_kb = ReplyKeyboardMarkup()
-greet_kb.add(button_knb)
-button_knb = KeyboardButton('КНБ')
 
 def get_random_img():
     try:
@@ -23,10 +20,16 @@ def get_random_img():
     except Exception:
         return None
 
-@dp.message_handler(commands=['start'])
-async def process_start_command(message: types.Message):
-    await message.reply("Привет!", reply_markup=kb.greet_kb)
+@dp.message(Command("start"))
+async def cmd_start(message: types.Message):
+    kb = [
 
+        [types.KeyboardButton(text="/КНБ Камень")],
+        [types.KeyboardButton(text="/КНБ Ножницы")],
+        [types.KeyboardButton(text="/КНБ Бумага")]
+    ]
+    keyboard = types.ReplyKeyboardMarkup(keyboard=kb)
+    await message.answer("Выбери камень, ножницы или бумагу", reply_markup=keyboard)
 
 @dp.message(Command('img'))
 async def cmd_img(message: types.message):
@@ -51,7 +54,7 @@ async def cmd_echo(message: types.message):
         await message.answer('и че это щас было')
 
 
-@dp.message_handler(Command['КНБ'])
+@dp.message(Command('КНБ'))
 async def game(message: types.Message):
     knb = ['камень', 'ножницы', 'бумагу']
     bot = random.choice(knb)
