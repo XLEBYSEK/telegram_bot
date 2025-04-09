@@ -3,13 +3,16 @@ from email import message
 import random
 from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
-    InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram import Bot, Dispatcher, types
+    InlineKeyboardMarkup, InlineKeyboardButton, Message
+from aiogram import Bot, Dispatcher, types, Router
 from aiogram.filters import Command
 from media import media
 
+
 bot = Bot(token="7592600913:AAFtL4qAI5_b1iQlyC_ASgXKVUmCyqGc90U")
 dp = Dispatcher()
+router = Router()
+dp.include_router(router)
 
 
 def get_random_img():
